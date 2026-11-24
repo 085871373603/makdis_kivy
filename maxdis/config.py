@@ -16,9 +16,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-APP_TITLE = "Menu Utama | MAXDIS"
+APP_TITLE = "Menu Utama "
 APP_VERSION = "App Toko V2.5.6"
-APP_COPYRIGHT = "Arinex © 2026"
+APP_COPYRIGHT = "ARNX © 2026"
 
 # Sama dengan HTML: password dibandingkan setelah trim() + toUpperCase().
 ACCESS_PASSWORD = "1JD7"
@@ -55,7 +55,7 @@ MENUS: tuple[MenuItem, ...] = (
     MenuItem(
         key="timer",
         title="Timer Makdis",
-        description="Aplikasi timer dan pengaturan waktu pengerjaan lorong.",
+        description="Aplikasi Timer",
         icon="icon-192lama.png",
         icon_fallback="logo-192.png",
         bg="#fff0f0",
@@ -64,7 +64,7 @@ MENUS: tuple[MenuItem, ...] = (
     MenuItem(
         key="juklak",
         title="Juklak Menu",
-        description="Alur tata cara dan proses pembuatan RTD/RTE/IHB & BnS.",
+        description="RTD/RTE/IHB & BnS.",
         icon="logo_juklak.png",
         bg="#fff8e6",
     ),
@@ -72,7 +72,7 @@ MENUS: tuple[MenuItem, ...] = (
     MenuItem(
         key="sob",
         title="SOB",
-        description="Stock Opname Barang.",
+        description="SO BSPOT.",
         icon="so.png",
         bg="#eaf3ff",
         locked=True,
@@ -81,7 +81,7 @@ MENUS: tuple[MenuItem, ...] = (
     MenuItem(
         key="pps",
         title="Laporan PPS",
-        description="Buat dan pantau target penjualan shift.",
+        description="-.",
         icon="pps.png",
         bg="#eaf8ed",
         locked=True,
@@ -89,7 +89,7 @@ MENUS: tuple[MenuItem, ...] = (
     # https://rak-nu.vercel.app  (password)
     MenuItem(
         key="rak",
-        title="Kebersihan Rak",
+        title="PIC RAK",
         description="Manajemen dan monitoring kebersihan rak.",
         icon="rak.png",
         bg="#f3ecff",
@@ -101,7 +101,7 @@ MENUS: tuple[MenuItem, ...] = (
     MenuItem(
         key="shelftalker",
         title="Generator Shelftalker",
-        description="Buat dan cetak Shelftalker harga.",
+        description=".",
         icon="label.png",
         bg="#eaf0ff",
         action="desktop",
