@@ -1,0 +1,118 @@
+#:import theme maxdis.theme
+#:import dp kivy.metrics.dp
+
+# =====================================================================
+# PASSWORD  (#passwordModal)
+# =====================================================================
+
+<PasswordModal>:
+    size_hint: None, None
+    size: card.size
+    ModalCard:
+        id: card
+        IconBubble:
+            glyph: 'lock'
+        WrapLabel:
+            text: 'Akses Terkunci'
+            bold: True
+            font_size: '19sp'
+            halign: 'center'
+        WrapLabel:
+            text: 'Masukkan password akses untuk membuka menu ini.'
+            font_size: '13sp'
+            halign: 'center'
+            color: theme.TEXT_SECONDARY
+            line_height: 1.3
+        RoundedInput:
+            id: pw
+            hint_text: 'PASSWORD'
+            password: True
+            on_text_validate: root.verify()
+            on_text: root.clear_error()
+        Label:
+            text: root.error_text
+            font_size: '12sp'
+            color: theme.PRIMARY
+            size_hint_y: None
+            height: dp(18)
+        BoxLayout:
+            size_hint_y: None
+            height: dp(45)
+            spacing: dp(10)
+            FlatButton:
+                text: 'Batal'
+                bg_color: theme.BTN_CANCEL_BG
+                bg_down_color: theme.BTN_CANCEL_BG_DOWN
+                fg_color: theme.BTN_CANCEL_TEXT
+                on_release: root.dismiss()
+            FlatButton:
+                text: 'Masuk'
+                on_release: root.verify()
+
+# =====================================================================
+# INFO  (#devModal dan pengganti alert())
+# =====================================================================
+
+<InfoModal>:
+    size_hint: None, None
+    size: card.size
+    ModalCard:
+        id: card
+        IconBubble:
+            glyph: root.glyph
+        WrapLabel:
+            text: root.title_text
+            bold: True
+            font_size: '19sp'
+            halign: 'center'
+        WrapLabel:
+            text: root.body_text
+            markup: True
+            font_size: '13sp'
+            halign: 'center'
+            color: theme.TEXT_SECONDARY
+            line_height: 1.3
+        FlatButton:
+            text: root.button_text
+            bg_color: theme.BLUE
+            bg_down_color: theme.BLUE_DARK
+            on_release: root.dismiss()
+
+# =====================================================================
+# MODE DESKTOP  (#desktopModal)
+# =====================================================================
+
+<DesktopModal>:
+    size_hint: None, None
+    size: card.size
+    ModalCard:
+        id: card
+        IconBubble:
+            glyph: 'desktop'
+            bg_color: theme.BLUE_LIGHT
+            fg_color: theme.BLUE
+        WrapLabel:
+            text: 'Beralih ke Tampilan Desktop'
+            bold: True
+            font_size: '19sp'
+            halign: 'center'
+        WrapLabel:
+            text: 'Fitur [b]Generator Shelftalker[/b] membutuhkan area layar yang lebih luas.\n\nTampilan akan disesuaikan ke mode desktop (Landscape/Lebar).\n\nLanjutkan?'
+            markup: True
+            font_size: '13sp'
+            halign: 'center'
+            color: theme.TEXT_SECONDARY
+            line_height: 1.3
+        BoxLayout:
+            size_hint_y: None
+            height: dp(45)
+            spacing: dp(10)
+            FlatButton:
+                text: 'Batal'
+                bg_color: theme.BTN_CANCEL_BG
+                bg_down_color: theme.BTN_CANCEL_BG_DOWN
+                fg_color: theme.BTN_CANCEL_TEXT
+                on_release: root.dismiss()
+            FlatButton:
+                text: 'Lanjut'
+                on_release: root.confirm()
