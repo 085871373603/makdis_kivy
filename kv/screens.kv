@@ -1,0 +1,156 @@
+#:import theme maxdis.theme
+#:import dp kivy.metrics.dp
+
+# =====================================================================
+# MENU UTAMA
+# =====================================================================
+
+<MenuScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        AppHeader:
+            logo: root.logo
+
+        ScrollView:
+            do_scroll_x: False
+            bar_width: dp(3)
+
+            AnchorLayout:
+                size_hint_y: None
+                height: body.height
+                anchor_x: 'center'
+                anchor_y: 'top'
+
+                BoxLayout:
+                    id: body
+                    orientation: 'vertical'
+                    size_hint: None, None
+                    width: min(self.parent.width, dp(680))
+                    height: self.minimum_height
+                    padding: dp(16), dp(25), dp(16), dp(15)
+
+                    # ---- judul halaman ----
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: self.minimum_height
+                        padding: 0, 0, 0, dp(19)
+                        spacing: dp(6)
+                        WrapLabel:
+                            text: 'Menu Utama'
+                            bold: True
+                            font_size: '21sp'
+                        WrapLabel:
+                            text: 'Pilih aplikasi yang ingin Anda gunakan. Seluruh kebutuhan operasional toko dalam satu tempat.'
+                            font_size: '13sp'
+                            color: theme.TEXT_SECONDARY
+                            line_height: 1.25
+
+                    # ---- label seksi ----
+                    BoxLayout:
+                        size_hint_y: None
+                        height: dp(35)
+                        padding: 0, 0, 0, dp(11)
+                        Label:
+                            text: 'DAFTAR APLIKASI'
+                            bold: True
+                            font_size: '12sp'
+                            color: theme.TEXT_SECONDARY
+                            text_size: self.size
+                            halign: 'left'
+                            valign: 'middle'
+                        PillLabel:
+                            text: '%d MENU' % root.item_count
+                            pos_hint: {'center_y': .5}
+
+                    # ---- daftar kartu (diisi dari Python) ----
+                    BoxLayout:
+                        id: cards
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: self.minimum_height
+                        spacing: dp(11)
+
+                    # ---- footer ----
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: self.minimum_height
+                        padding: 0, dp(26), 0, dp(25)
+                        spacing: dp(8)
+                        AnchorLayout:
+                            size_hint_y: None
+                            height: dp(3)
+                            Widget:
+                                size_hint: None, None
+                                size: dp(42), dp(3)
+                                canvas:
+                                    Color:
+                                        rgba: theme.DIVIDER
+                                    RoundedRectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                        radius: [dp(2)]
+                        WrapLabel:
+                            text: root.app_version
+                            bold: True
+                            font_size: '11sp'
+                            halign: 'center'
+                            color: theme.TEXT_SECONDARY
+                        WrapLabel:
+                            text: root.app_copyright
+                            font_size: '11sp'
+                            halign: 'center'
+                            color: theme.TEXT_MUTED
+
+# =====================================================================
+# PLACEHOLDER HALAMAN
+# =====================================================================
+
+<PageScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(56)
+            padding: dp(12), dp(9)
+            spacing: dp(12)
+            canvas.before:
+                Color:
+                    rgba: theme.PRIMARY
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            GhostButton:
+                text: '<'
+                font_size: '20sp'
+                pos_hint: {'center_y': .5}
+                on_release: app.go_back()
+            WrapLabel:
+                text: root.title
+                bold: True
+                font_size: '17sp'
+                color: 1, 1, 1, 1
+                pos_hint: {'center_y': .5}
+
+        AnchorLayout:
+            padding: dp(32)
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: None, None
+                width: min(self.parent.width - dp(64), dp(420))
+                height: self.minimum_height
+                spacing: dp(10)
+                WrapLabel:
+                    text: root.title
+                    bold: True
+                    font_size: '19sp'
+                    halign: 'center'
+                WrapLabel:
+                    text: root.message
+                    font_size: '13sp'
+                    halign: 'center'
+                    color: theme.TEXT_SECONDARY
+                    line_height: 1.3

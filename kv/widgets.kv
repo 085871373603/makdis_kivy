@@ -1,0 +1,307 @@
+#:import theme maxdis.theme
+#:import dp kivy.metrics.dp
+#:import Window kivy.core.window.Window
+
+# =====================================================================
+# TEKS & TOMBOL
+# =====================================================================
+
+<WrapLabel>:
+    size_hint_y: None
+    text_size: self.width, None
+    height: self.texture_size[1]
+    halign: 'left'
+    valign: 'top'
+    color: theme.TEXT
+
+<PillLabel>:
+    size_hint: None, None
+    size: self.texture_size[0] + dp(20), dp(24)
+    bold: True
+    font_size: '11sp'
+    color: theme.PRIMARY
+    canvas.before:
+        Color:
+            rgba: theme.PRIMARY_LIGHT
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(12)]
+
+<FlatButton>:
+    size_hint_y: None
+    height: dp(45)
+    bold: True
+    font_size: '13sp'
+    color: self.fg_color
+    canvas.before:
+        Color:
+            rgba: self.bg_down_color if self.state == 'down' else self.bg_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(10)]
+
+<GhostButton>:
+    size_hint: None, None
+    size: dp(38), dp(38)
+    color: 1, 1, 1, 1
+    font_size: '26sp'
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, .25) if self.state == 'down' else (1, 1, 1, .12)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(11)]
+        Color:
+            rgba: 1, 1, 1, .2
+        Line:
+            rounded_rectangle: self.x, self.y, self.width, self.height, dp(11)
+            width: 1
+
+<ArrowBadge>:
+    size_hint: None, None
+    size: dp(29), dp(29)
+    canvas:
+        Color:
+            rgba: theme.PRIMARY if self.pressed else theme.ARROW_BG
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(9)]
+        Color:
+            rgba: theme.WHITE if self.pressed else theme.TEXT_MUTED
+        Line:
+            points: self.center_x - dp(2.5), self.center_y + dp(5), self.center_x + dp(2.5), self.center_y, self.center_x - dp(2.5), self.center_y - dp(5)
+            width: dp(1.5)
+            cap: 'round'
+            joint: 'round'
+
+# =====================================================================
+# KARTU MENU
+# =====================================================================
+
+<MenuIcon>:
+    size_hint: None, None
+    canvas.before:
+        Color:
+            rgba: self.bg_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(13)]
+    Image:
+        source: root.source
+        opacity: 1 if root.source else 0
+        size_hint: None, None
+        size: root.width * .62, root.height * .62
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        fit_mode: 'contain'
+    Label:
+        text: root.letter
+        bold: True
+        font_size: '22sp'
+        color: theme.PRIMARY
+        opacity: 0 if root.source else 1
+
+<MenuCard>:
+    compact: Window.width < dp(400)
+    wide: Window.width >= dp(700)
+    size_hint_y: None
+    padding: dp(12) if self.compact else (dp(17) if self.wide else dp(14))
+    spacing: dp(12) if self.compact else dp(14)
+    height: max(dp(78) if self.compact else (dp(91) if self.wide else dp(84)), text_col.height + self.padding[1] + self.padding[3])
+    canvas.before:
+        Color:
+            rgba: theme.BORDER_DOWN if self.state == 'down' else theme.BORDER
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(15)]
+        Color:
+            rgba: theme.SURFACE_DOWN if self.state == 'down' else theme.SURFACE
+        RoundedRectangle:
+            pos: self.x + dp(1), self.y + dp(1)
+            size: self.width - dp(2), self.height - dp(2)
+            radius: [dp(14)]
+    MenuIcon:
+        size: (dp(47), dp(47)) if root.compact else (dp(53), dp(53))
+        source: root.icon_source
+        letter: root.title[:1]
+        bg_color: root.icon_bg
+        pos_hint: {'center_y': .5}
+    BoxLayout:
+        id: text_col
+        orientation: 'vertical'
+        size_hint_y: None
+        height: self.minimum_height
+        pos_hint: {'center_y': .5}
+        spacing: dp(5)
+        WrapLabel:
+            text: root.title
+            bold: True
+            font_size: '14sp' if root.compact else ('16sp' if root.wide else '15sp')
+        WrapLabel:
+            text: root.description
+            font_size: '11sp' if root.compact else ('12sp' if root.wide else '11.5sp')
+            color: theme.TEXT_SECONDARY
+            line_height: 1.25
+    ArrowBadge:
+        pressed: root.state == 'down'
+        pos_hint: {'center_y': .5}
+
+# =====================================================================
+# HEADER
+# =====================================================================
+
+<AppHeader>:
+    size_hint_y: None
+    height: dp(64)
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            texture: root.gradient
+            pos: self.pos
+            size: self.size
+    AnchorLayout:
+        anchor_x: 'center'
+        BoxLayout:
+            size_hint_x: None
+            width: min(self.parent.width, dp(680))
+            padding: dp(18), 0
+            spacing: dp(11)
+            FloatLayout:
+                size_hint: None, None
+                size: dp(37), dp(37)
+                pos_hint: {'center_y': .5}
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, .17
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [dp(11)]
+                Image:
+                    source: root.logo
+                    opacity: 1 if root.logo else 0
+                    size_hint: None, None
+                    size: dp(28), dp(28)
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    fit_mode: 'contain'
+                Label:
+                    text: 'M'
+                    bold: True
+                    font_size: '18sp'
+                    color: 1, 1, 1, 1
+                    opacity: 0 if root.logo else 1
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                pos_hint: {'center_y': .5}
+                WrapLabel:
+                    text: 'MAXDIS'
+                    bold: True
+                    font_size: '17sp'
+                    color: 1, 1, 1, 1
+                WrapLabel:
+                    text: 'STORE APPLICATION'
+                    font_size: '10sp'
+                    color: 1, 1, 1, .78
+            GhostButton:
+                text: '×'
+                pos_hint: {'center_y': .5}
+                on_release: app.go_home()
+
+# =====================================================================
+# DIALOG
+# =====================================================================
+
+<ModalCard>:
+    orientation: 'vertical'
+    size_hint: None, None
+    width: min(dp(360), Window.width - dp(40))
+    height: self.minimum_height
+    padding: dp(21), dp(25), dp(21), dp(21)
+    spacing: dp(12)
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .08
+        RoundedRectangle:
+            pos: self.x, self.y - dp(4)
+            size: self.size
+            radius: [dp(20)]
+        Color:
+            rgba: theme.WHITE
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(20)]
+
+<IconBubble>:
+    size_hint: None, None
+    size: dp(65), dp(65)
+    pos_hint: {'center_x': .5}
+
+<RoundedInput>:
+    multiline: False
+    write_tab: False
+    halign: 'center'
+    font_size: '17sp'
+    size_hint_y: None
+    height: dp(49)
+    padding: [dp(12), max(0, (self.height - self.line_height) / 2)]
+    background_normal: ''
+    background_active: ''
+    background_color: 0, 0, 0, 0
+    foreground_color: theme.TEXT
+    hint_text_color: theme.PLACEHOLDER
+    cursor_color: theme.PRIMARY
+    canvas.before:
+        Color:
+            rgba: theme.PRIMARY_GLOW if self.focus else (0, 0, 0, 0)
+        RoundedRectangle:
+            pos: self.x - dp(3), self.y - dp(3)
+            size: self.width + dp(6), self.height + dp(6)
+            radius: [dp(14)]
+        Color:
+            rgba: theme.PRIMARY if self.focus else theme.INPUT_BORDER
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(11)]
+        Color:
+            rgba: theme.WHITE if self.focus else theme.INPUT_BG
+        RoundedRectangle:
+            pos: self.x + dp(1.5), self.y + dp(1.5)
+            size: self.width - dp(3), self.height - dp(3)
+            radius: [dp(10)]
+
+# =====================================================================
+# INDIKATOR OFFLINE
+# =====================================================================
+
+<OfflineBanner>:
+    text: 'OFFLINE MODE'
+    bold: True
+    font_size: '11sp'
+    color: theme.WHITE
+    size_hint: None, None
+    size: dp(150), dp(32)
+    pos_hint: {'center_x': .5}
+    y: dp(14)
+    opacity: 0
+    canvas.before:
+        Color:
+            rgba: theme.TOAST_BG
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(16)]
+        Color:
+            rgba: .94, .27, .27, 1
+        Ellipse:
+            pos: self.x + dp(15), self.center_y - dp(4)
+            size: dp(8), dp(8)
